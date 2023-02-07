@@ -1,0 +1,32 @@
+{
+  "name": "@web-tool/to-jsx-for-vite",
+  "version": "1.0.0",
+  "description": "transform js to jsx for vite",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "unbuild",
+    "start": "esno index.ts"
+  },
+  "author": "jaw",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/parser": "^7.20.15",
+    "@babel/traverse": "^7.20.13",
+    "glob": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.18.3",
+    "@types/glob": "^8.0.1"
+  }
+}
