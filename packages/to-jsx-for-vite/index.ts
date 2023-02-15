@@ -1,7 +1,8 @@
 import fs from 'fs'
-import glob from 'glob'
 import * as parser from '@babel/parser'
 import _traverse from '@babel/traverse'
+import glob from 'glob'
+import { gray, green } from 'kolorist'
 import prompts from 'prompts'
 const traverse = (_traverse as any).default as typeof _traverse
 
@@ -9,7 +10,7 @@ const runTransform = async () => {
   const { scanPath } = await prompts({
     type: 'text',
     name: 'scanPath',
-    message: '请指定需要扫描的路径',
+    message: '请指定需要扫描的文件夹',
     initial: 'src',
   })
 
@@ -45,6 +46,12 @@ const runTransform = async () => {
         throw err
     })
   })
+
+  if (needTransformList.length > 0) {
+    console.log(`${green('√')} 完成${green('to jsx')}`)
+  } else {
+    console.log(`${gray('-')} 没有需要${green('to jsx')}的文件`)
+  }
 }
 
 runTransform()
