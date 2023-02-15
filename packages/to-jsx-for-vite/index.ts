@@ -2,10 +2,18 @@ import fs from 'fs'
 import glob from 'glob'
 import * as parser from '@babel/parser'
 import _traverse from '@babel/traverse'
+import prompts from 'prompts'
 const traverse = (_traverse as any).default as typeof _traverse
 
-const runTransform = () => {
-  const tsFiles = glob.sync('src/**/*.{ts,js}', {
+const runTransform = async () => {
+  const { scanPath } = await prompts({
+    type: 'text',
+    name: 'scanPath',
+    message: '请指定需要扫描的路径',
+    initial: 'src',
+  })
+
+  const tsFiles = glob.sync(`${scanPath}/**/*.{ts,js}`, {
     ignore: ['**/*.test.js', '**/*.{d,types,type}.ts', '**/*{types,type}.ts', '**/node_modules/**'],
   })
 
