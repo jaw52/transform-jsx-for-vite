@@ -1,5 +1,5 @@
 {
-  "name": "@web-tool/to-jsx-for-vite",
+  "name": "@jaw52/transform-jsx-for-vite",
   "version": "1.0.0",
   "description": "transform js to jsx for vite",
   "main": "./dist/index.cjs",
@@ -16,9 +16,11 @@
   },
   "scripts": {
     "build": "unbuild",
-    "dev": "esno index.ts"
+    "dev": "esno index.ts",
+    "prepublishOnly": "nr build",
+    "release": "bumpp && npm publish"
   },
-  "author": "jaw",
+  "author": "jaw52",
   "license": "ISC",
   "dependencies": {
     "@babel/parser": "^7.20.15",
@@ -31,5 +33,8 @@
     "@types/babel__traverse": "^7.18.3",
     "@types/glob": "^8.0.1",
     "@types/prompts": "^2.4.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
