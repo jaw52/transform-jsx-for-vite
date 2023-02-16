@@ -1,12 +1,19 @@
 {
   "name": "@jaw52/transform-jsx-for-vite",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "transform js to jsx for vite",
   "main": "./dist/index.cjs",
+  "module": "dist/index.mjs",
   "types": "./dist/index.d.ts",
   "type": "module",
   "files": [
     "dist"
+  ],
+  "bin": {
+    "transform-jsx": "bin/transform-jsx.mjs"
+  },
+  "keywords": [
+    "vite"
   ],
   "exports": {
     ".": {
