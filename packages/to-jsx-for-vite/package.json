@@ -1,11 +1,13 @@
 {
   "name": "@jaw52/transform-jsx-for-vite",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "transform js to jsx for vite",
   "main": "./dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "./dist/index.d.ts",
   "type": "module",
+  "homepage": "https://github.com/jaw52/node-tool#readme",
+  "bugs": "https://github.com/jaw52/node-tool/issues",
   "files": [
     "dist"
   ],
