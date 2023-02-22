@@ -2,7 +2,7 @@ import fs from 'fs'
 import * as parser from '@babel/parser'
 import _traverse from '@babel/traverse'
 import glob from 'glob'
-import { gray, green } from 'kolorist'
+import { gray, green, red } from 'kolorist'
 import prompts from 'prompts'
 import slash from 'slash'
 
@@ -15,6 +15,11 @@ const runTransform = async () => {
     message: '请指定需要扫描的文件夹',
     initial: 'src',
   }) as { scanPath: string }
+
+  if (!fs.existsSync(scanPath) || fs.lstatSync(scanPath).isFile()) {
+    console.error(`${red('×')} 请检查路径是否正确`)
+    return
+  }
 
   const tsFiles = glob.sync(`${slash(scanPath)}/**/*.{ts,js}`, {
     ignore: ['**/*.test.js', '**/*.{d,types,type}.ts', '**/*{types,type}.ts', '**/node_modules/**'],
@@ -52,7 +57,7 @@ const runTransform = async () => {
   if (needTransformList.length > 0) {
     console.log(`${green('√')} 完成${green('to jsx')}`)
   } else {
-    console.log(`${gray('-')} 没有需要${green('to jsx')}的文件`)
+    console.log(`${gray('- 没有需要to jsx的文件')}`)
   }
 }
 
