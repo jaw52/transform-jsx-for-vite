@@ -13,3 +13,17 @@ npx @jaw52/transform-jsx-for-vite
 ```
 
 等待批量修改`.js`的后缀名
+
+## 补充说明
+
+如果需要扫描的目录名称不是src，则可以按照提示按以下命令执行
+
+```bash
+# 相对路径
+请指定需要扫描的文件夹 ./example/src
+请指定需要扫描的文件夹 example/src
+请指定需要扫描的文件夹 ../example/src
+
+# 绝对路径（注意斜杠）
+请指定需要扫描的文件夹 ... D:/github/node-tool/packages/example/src
+```
