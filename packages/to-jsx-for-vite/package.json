@@ -1,6 +1,6 @@
 {
   "name": "@jaw52/transform-jsx-for-vite",
-  "version": "1.0.3",
+  "version": "1.1.4",
   "description": "transform js to jsx for vite",
   "main": "./dist/index.cjs",
   "module": "dist/index.mjs",
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "unbuild",
-    "dev": "esno index.ts",
+    "dev": "esno src/index.ts",
     "prepublishOnly": "nr build",
     "release": "bumpp && npm publish"
   },
