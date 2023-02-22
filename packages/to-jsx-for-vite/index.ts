@@ -33,17 +33,24 @@ const transformStart = async (scanPath: string, isGit: 1 | 0): Promise<string[]>
   })
 
   if (isGit === 1) {
-    needTransformList.forEach(async (item) => {
-      const target = item.includes('.js')
-        ? item.replace(/.js$/, '.jsx')
-        : item.replace(/.ts$/, '.tsx')
+    await Promise.all(
+      needTransformList.map((item) => {
+        const target = item.includes('.js')
+          ? item.replace(/.js$/, '.jsx')
+          : item.replace(/.ts$/, '.tsx')
 
-      try {
-        await execa('git', ['mv', item, target])
-      } catch (error: any) {
-        console.log(`${red('×')} ERROR: Git项目迁移代码失败，请尝试另外一种方式. stderr: ${error}`)
-      }
-    })
+        return (
+          async () => {
+            try {
+              await execa('git', ['mv', item, target])
+            } catch (error: any) {
+              console.log(`${red('×')} ERROR: Git项目迁移代码失败，请尝试另外一种方式。\nstderr: ${error}`)
+              return Promise.reject(Error('Err'))
+            }
+          }
+        )()
+      }),
+    )
   } else {
     needTransformList.forEach(async (item) => {
       const target = item.includes('.js')
@@ -70,7 +77,7 @@ const runTransform = async () => {
     type: 'select',
     name: 'isGit',
     message: '需要扫描的文件夹是否由Git托管',
-    initial: 1,
+    initial: 0,
     choices: [
       { title: 'Yes', value: 1 },
       { title: 'No', value: 0 },
