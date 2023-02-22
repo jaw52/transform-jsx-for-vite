@@ -5,22 +5,11 @@ import glob from 'glob'
 import { gray, green, red } from 'kolorist'
 import prompts from 'prompts'
 import slash from 'slash'
+import { execa } from 'execa'
 
 const traverse = (_traverse as any).default as typeof _traverse
 
-const runTransform = async () => {
-  const { scanPath } = await prompts({
-    type: 'text',
-    name: 'scanPath',
-    message: '请指定需要扫描的文件夹',
-    initial: 'src',
-  }) as { scanPath: string }
-
-  if (!fs.existsSync(scanPath) || fs.lstatSync(scanPath).isFile()) {
-    console.error(`${red('×')} 请检查路径是否正确`)
-    return
-  }
-
+const transformStart = async (scanPath: string, isGit: 1 | 0): Promise<string[]> => {
   const tsFiles = glob.sync(`${slash(scanPath)}/**/*.{ts,js}`, {
     ignore: ['**/*.test.js', '**/*.{d,types,type}.ts', '**/*{types,type}.ts', '**/node_modules/**'],
   })
@@ -43,21 +32,60 @@ const runTransform = async () => {
     })
   })
 
-  needTransformList.forEach((item) => {
-    const target = item.includes('.js')
-      ? item.replace(/.js$/, '.jsx')
-      : item.replace(/.ts$/, '.tsx')
+  if (isGit === 1) {
+    needTransformList.forEach(async (item) => {
+      const target = item.includes('.js')
+        ? item.replace(/.js$/, '.jsx')
+        : item.replace(/.ts$/, '.tsx')
 
-    fs.rename(item, target, (err) => {
-      if (err)
-        throw err
+      try {
+        await execa('git', ['mv', item, target])
+      } catch (error: any) {
+        console.log(`${red('×')} ERROR: Git项目迁移代码失败，请尝试另外一种方式. stderr: ${error}`)
+      }
     })
-  })
+  } else {
+    needTransformList.forEach(async (item) => {
+      const target = item.includes('.js')
+        ? item.replace(/.js$/, '.jsx')
+        : item.replace(/.ts$/, '.tsx')
 
+      fs.rename(item, target, (err) => {
+        if (err)
+          throw err
+      })
+    })
+  }
+
+  return needTransformList
+}
+
+const runTransform = async () => {
+  const { scanPath, isGit } = await prompts([{
+    type: 'text',
+    name: 'scanPath',
+    message: '请指定需要扫描的文件夹',
+    initial: 'src',
+  }, {
+    type: 'select',
+    name: 'isGit',
+    message: '需要扫描的文件夹是否由Git托管',
+    initial: 'Yes',
+    choices: [
+      { title: 'Yes', value: 1 },
+      { title: 'No', value: 0 },
+    ],
+  }]) as { scanPath: string; isGit: 1 | 0 }
+
+  if (!fs.existsSync(scanPath) || fs.lstatSync(scanPath).isFile()) {
+    console.error(`${red('×')} 请检查路径是否正确`)
+    return
+  }
+  const needTransformList = await transformStart(scanPath, isGit)
   if (needTransformList.length > 0) {
     console.log(`${green('√')} 完成${green('to jsx')}`)
   } else {
-    console.log(`${gray('- 没有需要to jsx的文件')}`)
+    console.log(`${gray('- 未发现需要迁移的文件')}`)
   }
 }
 

@@ -34,6 +34,7 @@
   "dependencies": {
     "@babel/parser": "^7.20.15",
     "@babel/traverse": "^7.20.13",
+    "execa": "^7.0.0",
     "glob": "^8.1.0",
     "kolorist": "^1.7.0",
     "prompts": "^2.4.2",
