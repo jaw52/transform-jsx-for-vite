@@ -25,5 +25,5 @@ npx @jaw52/transform-jsx-for-vite
 请指定需要扫描的文件夹 ../example/src
 
 # 绝对路径（注意斜杠）
-请指定需要扫描的文件夹 ... D:/github/node-tool/packages/example/src
+请指定需要扫描的文件夹 D:/github/node-tool/packages/example/src
 ```
