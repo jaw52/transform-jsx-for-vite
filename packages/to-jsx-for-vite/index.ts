@@ -4,6 +4,8 @@ import _traverse from '@babel/traverse'
 import glob from 'glob'
 import { gray, green } from 'kolorist'
 import prompts from 'prompts'
+import slash from 'slash'
+
 const traverse = (_traverse as any).default as typeof _traverse
 
 const runTransform = async () => {
@@ -12,9 +14,9 @@ const runTransform = async () => {
     name: 'scanPath',
     message: '请指定需要扫描的文件夹',
     initial: 'src',
-  })
+  }) as { scanPath: string }
 
-  const tsFiles = glob.sync(`${scanPath}/**/*.{ts,js}`, {
+  const tsFiles = glob.sync(`${slash(scanPath)}/**/*.{ts,js}`, {
     ignore: ['**/*.test.js', '**/*.{d,types,type}.ts', '**/*{types,type}.ts', '**/node_modules/**'],
   })
 

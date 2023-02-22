@@ -32,12 +32,14 @@ importers:
       glob: ^8.1.0
       kolorist: ^1.7.0
       prompts: ^2.4.2
+      slash: ^5.0.0
     dependencies:
       '@babel/parser': 7.20.15
       '@babel/traverse': 7.20.13
       glob: 8.1.0
       kolorist: 1.7.0
       prompts: 2.4.2
+      slash: 5.0.0
     devDependencies:
       '@types/babel__traverse': 7.18.3
       '@types/glob': 8.0.1
@@ -3221,6 +3223,11 @@ packages:
     resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
     engines: {node: '>=12'}
     dev: true
+
+  /slash/5.0.0:
+    resolution: {integrity: sha512-n6KkmvKS0623igEVj3FF0OZs1gYYJ0o0Hj939yc1fyxl2xt+xYpLnzJB6xBSqOfV9ZFLEWodBBN/heZJahuIJQ==}
+    engines: {node: '>=14.16'}
+    dev: false
 
   /source-map-support/0.5.21:
     resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
