@@ -70,7 +70,7 @@ const runTransform = async () => {
     type: 'select',
     name: 'isGit',
     message: '需要扫描的文件夹是否由Git托管',
-    initial: 'Yes',
+    initial: 1,
     choices: [
       { title: 'Yes', value: 1 },
       { title: 'No', value: 0 },
@@ -82,6 +82,7 @@ const runTransform = async () => {
     return
   }
   const needTransformList = await transformStart(scanPath, isGit)
+
   if (needTransformList.length > 0) {
     console.log(`${green('√')} 完成${green('to jsx')}`)
   } else {
