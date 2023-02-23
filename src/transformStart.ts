@@ -42,7 +42,7 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
     try {
       const ast = parser.parse(source, {
         sourceType: 'module',
-        plugins: ['jsx', 'typescript', 'dynamicImport', 'classProperties'],
+        plugins: ['jsx', 'typescript', 'dynamicImport', 'classProperties', 'decorators'],
       })
 
       traverse(ast, {
