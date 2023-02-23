@@ -1,6 +1,6 @@
 # transform-jsx-for-vite
 
-Translations Docs: <a href="https://github.com/jaw52/transform-jsx-for-vite/blob/main/README.md">English</a>
+Translations: <a href="https://github.com/jaw52/transform-jsx-for-vite/blob/main/README-EN.md">English</a>
 
 > 该工具用于辅助将传统react项目迁移至vite支持
 
