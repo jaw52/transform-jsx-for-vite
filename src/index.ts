@@ -1,9 +1,9 @@
 import fs from 'fs'
-import { gray, green } from 'kolorist'
+import consola from 'consola'
+import { green } from 'kolorist'
 import prompts from 'prompts'
-import { transformStart } from './transformStart'
-import { warnUtil } from './consoleUtil'
 import locales from './locales'
+import { transformStart } from './transformStart'
 
 const runTransform = async () => {
   const { scanPath, isGitMv } = await prompts([
@@ -21,6 +21,7 @@ const runTransform = async () => {
       type: 'text',
       name: 'scanPath',
       message: (_, values) => locales[values.lang].scanPath,
+      validate: value => (!fs.existsSync(value?.trim()) || fs.lstatSync(value?.trim()).isFile()) ? 'Please check the path' : true,
       initial: 'src',
     },
     {
@@ -36,20 +37,15 @@ const runTransform = async () => {
   ]) as { scanPath: string; isGitMv: 1 | 0; lang: 'zh' | 'en' }
 
   if (scanPath === undefined || isGitMv === undefined) {
-    console.log('Exit')
-    return
+    process.exit(1)
   }
 
-  if (!fs.existsSync(scanPath) || fs.lstatSync(scanPath).isFile()) {
-    warnUtil('Please check the path')
-    return
-  }
-  const needTransformList = await transformStart(scanPath, isGitMv)
+  const needTransformList = await transformStart(scanPath.trim(), isGitMv)
 
   if (needTransformList.length > 0) {
-    console.log(`${green('√')} Finish ${green('to jsx')}`)
+    consola.success(`Finish ${green('to jsx')}`)
   } else {
-    console.log(`${gray('- No files found to be migrated')}`)
+    consola.info('No files found to be migrated')
   }
 }
 
