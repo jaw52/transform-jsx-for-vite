@@ -6,16 +6,37 @@ importers:
     specifiers:
       '@antfu/eslint-config': ^0.35.2
       '@antfu/ni': ^0.20.0
+      '@babel/parser': ^7.20.15
+      '@babel/traverse': ^7.20.13
+      '@types/babel__traverse': ^7.18.3
+      '@types/glob': ^8.0.1
       '@types/node': ^18.13.0
+      '@types/prompts': ^2.4.2
       bumpp: ^8.2.1
       eslint: ^8.34.0
       esno: ^0.16.3
+      execa: ^7.0.0
+      glob: ^8.1.0
+      kolorist: ^1.7.0
+      prompts: ^2.4.2
+      slash: ^5.0.0
       typescript: ^4.9.5
       unbuild: ^1.1.1
+    dependencies:
+      '@babel/parser': 7.20.15
+      '@babel/traverse': 7.20.13
+      execa: 7.0.0
+      glob: 8.1.0
+      kolorist: 1.7.0
+      prompts: 2.4.2
+      slash: 5.0.0
     devDependencies:
       '@antfu/eslint-config': 0.35.2_7kw3g6rralp5ps6mg3uyzz6azm
       '@antfu/ni': 0.20.0
+      '@types/babel__traverse': 7.18.3
+      '@types/glob': 8.0.1
       '@types/node': 18.13.0
+      '@types/prompts': 2.4.2
       bumpp: 8.2.1
       eslint: 8.34.0
       esno: 0.16.3
