@@ -3,34 +3,53 @@ import { gray, green } from 'kolorist'
 import prompts from 'prompts'
 import { transformStart } from './transformStart'
 import { warnUtil } from './consoleUtil'
+import locales from './locales'
 
 const runTransform = async () => {
-  const { scanPath, isGitMv } = await prompts([{
-    type: 'text',
-    name: 'scanPath',
-    message: '请指定需要扫描的文件夹',
-    initial: 'src',
-  }, {
-    type: 'select',
-    name: 'isGitMv',
-    message: '是否使用Git mv方式进行批量修改后缀名（Git托管的项目 推荐这种方式）',
-    initial: 0,
-    choices: [
-      { title: 'Yes', value: 1 },
-      { title: 'No', value: 0 },
-    ],
-  }]) as { scanPath: string; isGitMv: 1 | 0 }
+  const { scanPath, isGitMv } = await prompts([
+    {
+      type: 'select',
+      name: 'lang',
+      message: 'Please select language',
+      initial: 0,
+      choices: [
+        { title: '简体中文', value: 'zh' },
+        { title: 'English', value: 'en' },
+      ],
+    },
+    {
+      type: 'text',
+      name: 'scanPath',
+      message: (_, values) => locales[values.lang].scanPath,
+      initial: 'src',
+    },
+    {
+      type: 'select',
+      name: 'isGitMv',
+      message: (_, values) => locales[values.lang].isGitMv,
+      initial: 0,
+      choices: [
+        { title: 'Yes', value: 1 },
+        { title: 'No', value: 0 },
+      ],
+    },
+  ]) as { scanPath: string; isGitMv: 1 | 0; lang: 'zh' | 'en' }
+
+  if (scanPath === undefined || isGitMv === undefined) {
+    console.log('Exit')
+    return
+  }
 
   if (!fs.existsSync(scanPath) || fs.lstatSync(scanPath).isFile()) {
-    warnUtil('请检查路径是否正确')
+    warnUtil('Please check the path')
     return
   }
   const needTransformList = await transformStart(scanPath, isGitMv)
 
   if (needTransformList.length > 0) {
-    console.log(`${green('√')} 完成${green('to jsx')}`)
+    console.log(`${green('√')} Finish${green('to jsx')}`)
   } else {
-    console.log(`${gray('- 未发现需要迁移的文件')}`)
+    console.log(`${gray('- No files found to be migrated')}`)
   }
 }
 

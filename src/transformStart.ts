@@ -13,11 +13,11 @@ const traverse = (_traverse as any).default as typeof _traverse
 const gitMv = async (oldPath: string, newPath: string) => {
   try {
     await execa('git', ['mv', oldPath, newPath])
-    console.log(green('Git mv ok       '), `${oldPath}=>${newPath}`)
+    console.log(`${green('Git mv ok       ')}${oldPath}=>${newPath}`)
   } catch (err) {
     try {
       await rename(oldPath, newPath)
-      console.log(green('Nodejs rename ok'), `${oldPath}=>${newPath}`)
+      console.log(`${green('Nodejs rename ok')}${oldPath}=>${newPath}`)
     } catch (error) {
       return Promise.reject(error)
     }
@@ -52,7 +52,7 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
         },
       })
     } catch (err) {
-      warnUtil('文件Babel解析失败。', err)
+      warnUtil('Babel failed to parse the file', err)
     }
   }
 
@@ -68,14 +68,14 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
             try {
               await gitMv(oldPath, target)
             } catch (error) {
-              warnUtil('项目迁移代码失败，可以尝试另一种方式迁移', error)
+              warnUtil('Project migration code failed. You can try another way to migrate', error)
             }
           } else {
             try {
               await rename(oldPath, target)
               console.log(green('Nodejs rename ok'), `${oldPath}=>${target}`)
             } catch (error) {
-              warnUtil('项目迁移代码失败', error)
+              warnUtil('Project migration code failed', error)
             }
           }
         }

@@ -2,24 +2,24 @@
 
 > This tool is used to assist the traditional React project to VITE support
 
-Used in batches to modify `.js` File suffix names (only modify files containing` jsx` grammar)
+Used in batches to modify `.js` file suffix names (only modify files containing` jsx` grammar)
 
 - ⚡️`.ts`=>`.tsx`,`.js`=>`.jsx`
 - 💡Using `babel` recognition, high accuracy
 
-## Start quickly
+## Quick Start
 
-The following command is executed under the root directory that needs to be converted
+Execute the following command under the root directory of the project to be converted
 
 ```cmd
 npx @jaw52/transform-jsx-for-vite
 ```
 
-Waiting for the suffix of the suffix in batches `.js`
+Wait for batch modification of suffix name of '. js'
 
 ## Instructions
 
-If the directory name of the scan is not `src`, you can use the relative path to specify
+If the directory name to be scanned is not src, you can use the relative path to specify it
 
 ```bash
 # 相对路径
