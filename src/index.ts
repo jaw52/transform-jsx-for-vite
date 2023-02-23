@@ -47,7 +47,7 @@ const runTransform = async () => {
   const needTransformList = await transformStart(scanPath, isGitMv)
 
   if (needTransformList.length > 0) {
-    console.log(`${green('√')} Finish${green('to jsx')}`)
+    console.log(`${green('√')} Finish ${green('to jsx')}`)
   } else {
     console.log(`${gray('- No files found to be migrated')}`)
   }
