@@ -1,7 +1,8 @@
 import fs from 'fs'
-import { gray, green, red } from 'kolorist'
+import { gray, green } from 'kolorist'
 import prompts from 'prompts'
 import { transformStart } from './transformStart'
+import { warnUtil } from './consoleUtil'
 
 const runTransform = async () => {
   const { scanPath, isGitMv } = await prompts([{
@@ -21,7 +22,7 @@ const runTransform = async () => {
   }]) as { scanPath: string; isGitMv: 1 | 0 }
 
   if (!fs.existsSync(scanPath) || fs.lstatSync(scanPath).isFile()) {
-    console.error(`${red('×')} 请检查路径是否正确`)
+    warnUtil('请检查路径是否正确')
     return
   }
   const needTransformList = await transformStart(scanPath, isGitMv)

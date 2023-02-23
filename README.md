@@ -16,15 +16,11 @@ npx @jaw52/transform-jsx-for-vite
 
 ## 补充说明
 
-如果需要扫描的目录名称不是src，则可以按照提示按以下命令执行
+如果需要扫描的目录名称不是src，可以使用相对路径进行指定
 
 ```bash
 # 相对路径
 请指定需要扫描的文件夹 ./example/src
 请指定需要扫描的文件夹 example/src
 请指定需要扫描的文件夹 ../example/src
-
-# 绝对路径（不推荐）
-请指定需要扫描的文件夹 D:/github/node-tool/packages/example/src
-请指定需要扫描的文件夹 ... D:\github\node-tool\example
 ```

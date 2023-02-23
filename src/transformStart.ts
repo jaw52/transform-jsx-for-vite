@@ -2,10 +2,12 @@ import fs from 'fs'
 import * as parser from '@babel/parser'
 import { execa } from 'execa'
 import glob from 'glob'
-import { green, red } from 'kolorist'
+import { green } from 'kolorist'
 import slash from 'slash'
 import _traverse from '@babel/traverse'
 import { rename } from './rename'
+import { warnUtil } from './consoleUtil'
+
 const traverse = (_traverse as any).default as typeof _traverse
 
 const gitMv = async (oldPath: string, newPath: string) => {
@@ -34,21 +36,25 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
 
   const needTransformList: string[] = []
 
-  tsFiles.forEach(async (path) => {
+  for (const path of tsFiles) {
     const source = fs.readFileSync(path, 'utf-8')
 
-    const ast = parser.parse(source, {
-      sourceType: 'module',
-      plugins: ['jsx', 'typescript', 'dynamicImport', 'classProperties'],
-    })
+    try {
+      const ast = parser.parse(source, {
+        sourceType: 'module',
+        plugins: ['jsx', 'typescript', 'dynamicImport', 'classProperties'],
+      })
 
-    traverse(ast, {
-      enter(pathNode) {
-        if (pathNode.isJSX() && !needTransformList.includes(path))
-          needTransformList.push(path)
-      },
-    })
-  })
+      traverse(ast, {
+        enter(pathNode) {
+          if (pathNode.isJSX() && !needTransformList.includes(path))
+            needTransformList.push(path)
+        },
+      })
+    } catch (err) {
+      warnUtil('文件Babel解析失败。', err)
+    }
+  }
 
   await Promise.all(
     needTransformList.map((oldPath) => {
@@ -62,14 +68,14 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
             try {
               await gitMv(oldPath, target)
             } catch (error) {
-              console.log(`${red('×')} ERROR: 项目迁移代码失败，可以尝试另一种方式迁移。\nstderr: ${error}`)
+              warnUtil('项目迁移代码失败，可以尝试另一种方式迁移', error)
             }
           } else {
             try {
               await rename(oldPath, target)
               console.log(green('Nodejs rename ok'), `${oldPath}=>${target}`)
             } catch (error) {
-              console.log(`${red('×')} ERROR: 项目迁移代码失败。\nstderr: ${error}`)
+              warnUtil('项目迁移代码失败', error)
             }
           }
         }
