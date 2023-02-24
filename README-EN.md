@@ -2,7 +2,7 @@
 
 > This tool is used to assist the traditional React project to VITE support
 
-Used in batches to modify `.js` file suffix names (only modify files containing` jsx` grammar)
+This tool helps migrate traditional React projects to Vite,Used in batches to modify `.js` file suffix names (**only modify** files containing` jsx` grammar)
 
 - ⚡️`.ts`=>`.tsx`,`.js`=>`.jsx`
 - 💡Using `babel` recognition, high accuracy
@@ -30,7 +30,7 @@ Please specify the folder to be scanned ../example/src
 
 ##Ignore path
 
-Manually ignore the scanning of some paths. Refer to [fast global] for rules（ https://github.com/mrmlnc/fast-glob#readme )
+Manually ignore the scanning of some paths. Refer to [fast-glob](https://github.com/mrmlnc/fast-glob#readme) for rules
 
 ```bash
 # single path
