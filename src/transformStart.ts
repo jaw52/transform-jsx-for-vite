@@ -1,23 +1,22 @@
 import fs from 'fs'
 import { rename } from 'node:fs/promises'
 import * as parser from '@babel/parser'
+import _traverse from '@babel/traverse'
+import consola from 'consola'
 import { execa } from 'execa'
 import glob from 'glob'
-import { green } from 'kolorist'
 import slash from 'slash'
-import _traverse from '@babel/traverse'
-import { warnUtil } from './consoleUtil'
 
 const traverse = (_traverse as any).default as typeof _traverse
 
 const gitMv = async (oldPath: string, newPath: string) => {
   try {
     await execa('git', ['mv', oldPath, newPath])
-    console.log(`${green('Git mv ok       ')}${oldPath}`)
+    consola.log('Git mv ok       ', oldPath)
   } catch (err) {
     try {
       await rename(oldPath, newPath)
-      console.log(`${green('Nodejs rename ok')}${oldPath}`)
+      consola.log('Nodejs rename ok', oldPath)
     } catch (error) {
       return Promise.reject(error)
     }
@@ -52,7 +51,7 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
         },
       })
     } catch (err) {
-      warnUtil('Babel failed to parse the file', err)
+      consola.error('Babel failed to parse the file', err)
     }
   }
 
@@ -68,14 +67,14 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
             try {
               await gitMv(oldPath, target)
             } catch (error) {
-              warnUtil('Project migration code failed. You can try another way to migrate', error)
+              console.error('Project migration code failed. You can try another way to migrate', error)
             }
           } else {
             try {
               await rename(oldPath, target)
-              console.log(green('Nodejs rename ok'), `${oldPath}`)
+              consola.log('Nodejs rename ok', oldPath)
             } catch (error) {
-              warnUtil('Project migration code failed', error)
+              consola.error('Project migration code failed', error)
             }
           }
         }
