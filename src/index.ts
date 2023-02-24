@@ -35,7 +35,7 @@ const runTransform = async () => {
       ],
     },
   ], {
-    onCancel: () => process.exit(1)
+    onCancel: () => process.exit(1),
   }) as { scanPath: string; isGitMv: 1 | 0; lang: 'zh' | 'en' }
 
   const needTransformList = await transformStart(scanPath.trim(), isGitMv)

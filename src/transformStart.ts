@@ -6,6 +6,7 @@ import consola from 'consola'
 import { execa } from 'execa'
 import slash from 'slash'
 import glob from 'fast-glob'
+import { loadArgs } from './loadArgs'
 
 const traverse = (_traverse as any).default as typeof _traverse
 
@@ -29,8 +30,11 @@ const gitMv = async (oldPath: string, newPath: string) => {
  * @returns 迁移的文件List
  */
 export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<string[]> => {
+  const ignore = loadArgs()
   const tsFiles = glob.sync(`${slash(scanPath)}/**/*.{ts,js}`, {
-    ignore: ['**/node_modules/**', '**/dist/**'],
+    ignore: ignore.length > 0
+      ? ['**/node_modules/**', '**/dist/**', ...ignore]
+      : ['**/node_modules/**', '**/dist/**'],
   })
 
   const needTransformList: string[] = []

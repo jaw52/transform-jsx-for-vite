@@ -12,6 +12,7 @@ importers:
       '@types/node': ^18.14.1
       '@types/prompts': ^2.4.2
       bumpp: ^8.2.1
+      cac: ^6.7.14
       consola: ^2.15.3
       eslint: ^8.34.0
       esno: ^0.16.3
@@ -25,6 +26,7 @@ importers:
     dependencies:
       '@babel/parser': 7.21.2
       '@babel/traverse': 7.21.2
+      cac: 6.7.14
       consola: 2.15.3
       execa: 7.0.0
       fast-glob: 3.2.12
@@ -1185,7 +1187,6 @@ packages:
   /cac/6.7.14:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
     engines: {node: '>=8'}
-    dev: true
 
   /call-bind/1.0.2:
     resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
