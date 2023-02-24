@@ -29,3 +29,14 @@ npx @jaw52/transform-jsx-for-vite
 请指定需要扫描的文件夹 example/src
 请指定需要扫描的文件夹 ../example/src
 ```
+
+## 忽略路径
+
+手动忽略某些路径的扫描，规则参照[fast-glob](https://github.com/mrmlnc/fast-glob#readme)
+
+```bash
+# 单个路径
+npx @jaw52/transform-jsx-for-vite --ignore **/example/**
+# 多个路径
+npx @jaw52/transform-jsx-for-vite --ignore **/.git/** --ignore **/example/**
+```

@@ -27,3 +27,14 @@ Please specify the folder to be scanned ./example/src
 Please specify the folder to be scanned example/src
 Please specify the folder to be scanned ../example/src
 ```
+
+##Ignore path
+
+Manually ignore the scanning of some paths. Refer to [fast global] for rules（ https://github.com/mrmlnc/fast-glob#readme )
+
+```bash
+# single path
+npx @jaw52/transform-jsx-for-vite --ignore **/example/**
+# Multiple paths
+npx @jaw52/transform-jsx-for-vite --ignore **/.git/** --ignore **/example/**
+```
