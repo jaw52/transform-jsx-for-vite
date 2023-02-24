@@ -4,8 +4,8 @@ import * as parser from '@babel/parser'
 import _traverse from '@babel/traverse'
 import consola from 'consola'
 import { execa } from 'execa'
-import glob from 'glob'
 import slash from 'slash'
+import glob from 'fast-glob'
 
 const traverse = (_traverse as any).default as typeof _traverse
 
@@ -30,7 +30,7 @@ const gitMv = async (oldPath: string, newPath: string) => {
  */
 export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<string[]> => {
   const tsFiles = glob.sync(`${slash(scanPath)}/**/*.{ts,js}`, {
-    ignore: ['**/*.test.js', '**/*.{d,types,type}.ts', '**/*{types,type}.ts', '**/node_modules/**'],
+    ignore: ['**/node_modules/**', '**/dist/**'],
   })
 
   const needTransformList: string[] = []
