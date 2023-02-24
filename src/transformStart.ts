@@ -36,7 +36,7 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
       ? ['**/node_modules/**', '**/dist/**', ...ignore]
       : ['**/node_modules/**', '**/dist/**'],
   })
-
+  const times = 0
   const needTransformList: string[] = []
 
   for (const path of tsFiles) {
@@ -50,6 +50,10 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
 
       traverse(ast, {
         enter(pathNode) {
+          if (needTransformList.includes(path)) {
+            pathNode.stop()
+          }
+
           if (pathNode.isJSX() && !needTransformList.includes(path))
             needTransformList.push(path)
         },
@@ -58,7 +62,7 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
       consola.error('Babel failed to parse the file', err)
     }
   }
-
+  consola.log(times)
   await Promise.all(
     needTransformList.map((oldPath) => {
       const target = oldPath.includes('.js')
