@@ -23,7 +23,7 @@ If the directory name to be scanned is not src, you can use the relative path to
 
 ```bash
 # 相对路径
-请指定需要扫描的文件夹 ./example/src
-请指定需要扫描的文件夹 example/src
-请指定需要扫描的文件夹 ../example/src
+Please specify the folder to be scanned ./example/src
+Please specify the folder to be scanned example/src
+Please specify the folder to be scanned ../example/src
 ```
