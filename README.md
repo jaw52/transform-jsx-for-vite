@@ -39,4 +39,6 @@ npx @jaw52/transform-jsx-for-vite
 npx @jaw52/transform-jsx-for-vite --ignore **/example/**
 # 多个路径
 npx @jaw52/transform-jsx-for-vite --ignore **/.git/** --ignore **/example/**
+# 或者使用逗号隔开(推荐)
+npx @jaw52/transform-jsx-for-vite --ignore **/.git/**,**/example/**
 ```

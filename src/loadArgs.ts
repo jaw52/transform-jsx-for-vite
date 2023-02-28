@@ -10,11 +10,17 @@ export const loadArgs = (): string[] => {
       .option('--ignore <ignore>', 'ignore path')
       .help()
 
-    const { options = { ignore: [] } } = cli.parse()
+    const { options = { ignore: [] } } = cli.parse() as { options: { ignore?: (string | boolean)[] | string | boolean } }
 
-    return (Array.isArray(options?.ignore) ? options?.ignore : [options?.ignore])
-      .filter(el => el && typeof el === 'string')
-  } catch (error) {
+    if (!options.ignore || typeof options.ignore === 'boolean')
+      return []
+
+    if (Array.isArray(options?.ignore))
+      return options?.ignore.filter(Boolean).map(el => (el as string)?.trim())
+
+    return options?.ignore.trim().split(',')
+  }
+  catch (error) {
     consola.error(error)
     process.exit(1)
   }

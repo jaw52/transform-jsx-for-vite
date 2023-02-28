@@ -37,4 +37,6 @@ Manually ignore the scanning of some paths. Refer to [fast-glob](https://github.
 npx @jaw52/transform-jsx-for-vite --ignore **/example/**
 # Multiple paths
 npx @jaw52/transform-jsx-for-vite --ignore **/.git/** --ignore **/example/**
+# Or use commas(Recommended)
+npx @jaw52/transform-jsx-for-vite --ignore **/.git/**,**/example/**
 ```
