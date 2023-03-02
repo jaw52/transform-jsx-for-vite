@@ -1,8 +1,8 @@
 import fs from 'fs'
 import consola from 'consola'
-import { green } from 'kolorist'
 import prompts from 'prompts'
-import locales from './locales'
+import { green } from 'kolorist'
+import locales from './utils/locales'
 import { transformStart } from './transformStart'
 
 const runTransform = async () => {
@@ -42,7 +42,8 @@ const runTransform = async () => {
 
   if (needTransformList.length > 0) {
     consola.success(`Finish ${green('to jsx')}`)
-  } else {
+  }
+  else {
     consola.info('No files found to be migrated')
   }
 }

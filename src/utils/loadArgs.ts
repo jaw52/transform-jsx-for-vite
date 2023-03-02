@@ -1,6 +1,6 @@
 import cac from 'cac'
 import consola from 'consola'
-import { version } from '../package.json'
+import { version } from '../../package.json'
 
 export const loadArgs = (): string[] => {
   try {

@@ -3,23 +3,34 @@ import { rename } from 'node:fs/promises'
 import * as parser from '@babel/parser'
 import _traverse from '@babel/traverse'
 import consola from 'consola'
-import { execa } from 'execa'
 import slash from 'slash'
 import glob from 'fast-glob'
-import { loadArgs } from './loadArgs'
+import ora from 'ora'
+import { loadArgs } from './utils/loadArgs'
+import { gitMv } from './utils/gitMv'
+import { formatMs } from './utils/formatTime'
 
 const traverse = (_traverse as any).default as typeof _traverse
 
-const gitMv = async (oldPath: string, newPath: string) => {
-  try {
-    await execa('git', ['mv', oldPath, newPath])
-    consola.log('Git mv ok       ', oldPath)
-  } catch (err) {
+const runRename = async (oldPath: string, isGitMv: 1 | 0) => {
+  const target = oldPath.includes('.js')
+    ? oldPath.replace(/.js$/, '.jsx')
+    : oldPath.replace(/.ts$/, '.tsx')
+
+  if (isGitMv === 1) {
     try {
-      await rename(oldPath, newPath)
-      consola.log('Nodejs rename ok', oldPath)
-    } catch (error) {
-      return Promise.reject(error)
+      await gitMv(oldPath, target)
+    }
+    catch (error) {
+      console.error('Project migration code failed. You can try another way to migrate', error)
+    }
+  }
+  else {
+    try {
+      await rename(oldPath, target)
+    }
+    catch (error) {
+      consola.error('Project migration code failed', error)
     }
   }
 }
@@ -58,37 +69,27 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
             needTransformList.push(path)
         },
       })
-    } catch (err) {
+    }
+    catch (err) {
       consola.error('Babel failed to parse the file', err)
     }
   }
 
-  await Promise.all(
-    needTransformList.map((oldPath) => {
-      const target = oldPath.includes('.js')
-        ? oldPath.replace(/.js$/, '.jsx')
-        : oldPath.replace(/.ts$/, '.tsx')
+  const spinner = ora()
+  const startTime = Date.now()
 
-      return (
-        async () => {
-          if (isGitMv === 1) {
-            try {
-              await gitMv(oldPath, target)
-            } catch (error) {
-              console.error('Project migration code failed. You can try another way to migrate', error)
-            }
-          } else {
-            try {
-              await rename(oldPath, target)
-              consola.log('Nodejs rename ok', oldPath)
-            } catch (error) {
-              consola.error('Project migration code failed', error)
-            }
-          }
-        }
-      )()
-    }),
-  )
+  try {
+    spinner.start('Start scanning\n')
+    await Promise.all(
+      needTransformList.map(path => runRename(path, isGitMv)),
+    )
+
+    const runTime = formatMs(Date.now() - startTime)
+    spinner.succeed(`Finish scanning - ${runTime}`)
+  }
+  catch {
+    spinner.fail('Fail')
+  }
 
   return needTransformList
 }
