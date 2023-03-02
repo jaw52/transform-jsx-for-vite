@@ -1,8 +1,8 @@
 {
   "name": "@jaw52/transform-jsx-for-vite",
-  "version": "1.4.1-beta.4",
+  "version": "1.4.1-beta.5",
   "description": "transform js to jsx for vite",
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "dist/index.mjs",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -22,7 +22,7 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
