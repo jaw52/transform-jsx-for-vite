@@ -1,20 +1,13 @@
 {
   "name": "@jaw52/transform-jsx-for-vite",
-  "version": "1.5.0",
-  "description": "transform js to jsx for vite",
-  "main": "./dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "type": "module",
+  "version": "1.5.0",
   "packageManager": "pnpm@7.12.0",
+  "description": "transform js to jsx for vite",
+  "author": "jaw52",
+  "license": "MIT",
   "homepage": "https://github.com/jaw52/transform-jsx-for-vite#readme",
   "bugs": "https://github.com/jaw52/transform-jsx-for-vite/issues",
-  "files": [
-    "dist"
-  ],
-  "bin": {
-    "transform-jsx": "bin/transform-jsx.mjs"
-  },
   "keywords": [
     "vite",
     "react",
@@ -22,26 +15,28 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
     }
   },
+  "main": "./dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "transform-jsx": "bin/transform-jsx.mjs"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "unbuild",
     "dev": "esno src/index.ts",
     "prepublishOnly": "nr build",
-    "release": "bumpp && npm publish"
+    "release": "bumpp && npm publish",
+    "lint": "eslint .",
+    "lint:fix": "nr lint --fix",
+    "typecheck": "tsc --noEmit"
   },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm exec lint-staged --concurrent false"
-  },
-  "lint-staged": {
-    "*.{ts}": [
-      "eslint --cache --fix"
-    ]
-  },
-  "author": "jaw52",
-  "license": "MIT",
   "dependencies": {
     "@babel/parser": "^7.21.2",
     "@babel/traverse": "^7.21.2",
@@ -63,8 +58,6 @@
     "bumpp": "^8.2.1",
     "eslint": "^8.34.0",
     "esno": "^0.16.3",
-    "lint-staged": "^13.1.2",
-    "simple-git-hooks": "^2.8.1",
     "typescript": "^4.9.5",
     "unbuild": "^1.1.2"
   },
