@@ -6,6 +6,7 @@ import consola from 'consola'
 import slash from 'slash'
 import glob from 'fast-glob'
 import ora from 'ora'
+import pLimit from 'p-limit'
 import { loadArgs } from './utils/loadArgs'
 import { gitMv } from './utils/gitMv'
 import { formatMs } from './utils/formatTime'
@@ -41,7 +42,8 @@ const runRename = async (oldPath: string, isGitMv: 1 | 0) => {
  * @returns 迁移的文件List
  */
 export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<string[]> => {
-  const ignore = loadArgs()
+  const { ignore, concurrency } = loadArgs()
+
   const tsFiles = glob.sync(`${slash(scanPath)}/**/*.{ts,js}`, {
     ignore: ignore.length > 0
       ? ['**/node_modules/**', '**/dist/**', ...ignore]
@@ -80,8 +82,10 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
 
   try {
     spinner.start('Start scanning\n')
+    const limit = pLimit(concurrency)
+
     await Promise.all(
-      needTransformList.map(path => runRename(path, isGitMv)),
+      needTransformList.map(path => limit(async () => runRename(path, isGitMv))),
     )
 
     const runTime = formatMs(Date.now() - startTime)
