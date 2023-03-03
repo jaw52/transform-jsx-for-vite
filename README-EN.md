@@ -1,5 +1,7 @@
 # transform-jsx-for-vite
 
+[![npm](https://img.shields.io/npm/v/@jaw52/transform-jsx-for-vite)](https://npmjs.com/package/@jaw52/transform-jsx-for-vite)
+
 > This tool is used to assist the traditional React project to VITE support
 
 This tool helps migrate traditional React projects to Vite,Used in batches to modify `.js` file suffix names (**only modify** files containing` jsx` grammar)
