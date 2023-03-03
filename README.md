@@ -23,6 +23,8 @@ npx @jaw52/transform-jsx-for-vite
 
 ## 使用
 
+### 扫描路径
+
 如果需要扫描的目录名称不是src，可以使用相对路径进行指定
 
 ```bash
@@ -32,7 +34,7 @@ npx @jaw52/transform-jsx-for-vite
 请指定需要扫描的文件夹 ../example/src
 ```
 
-## 忽略路径
+### 忽略路径
 
 手动忽略某些路径的扫描，规则参照[fast-glob](https://github.com/mrmlnc/fast-glob#readme)
 
@@ -43,4 +45,12 @@ npx @jaw52/transform-jsx-for-vite --ignore **/example/**
 npx @jaw52/transform-jsx-for-vite --ignore **/.git/** --ignore **/example/**
 # 或者使用逗号隔开(推荐)
 npx @jaw52/transform-jsx-for-vite --ignore **/.git/**,**/example/**
+```
+
+### 修改并发数
+
+同一时间执行修改命令的并发数量（默认为5）
+
+```bash
+npx @jaw52/transform-jsx-for-vite --concurrency 10
 ```

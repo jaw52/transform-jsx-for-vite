@@ -23,7 +23,7 @@ export const loadArgs = (): { ignore: string[]; concurrency: number } => {
 
     const { options } = cli.parse() as { options: { ignore?: (string | boolean)[] | string | boolean; concurrency?: number } }
 
-    return { ignore: parseIgnore(options.ignore), concurrency: options.concurrency ?? 10 }
+    return { ignore: parseIgnore(options.ignore), concurrency: options.concurrency ?? 5 }
   }
   catch (error) {
     consola.error(error)

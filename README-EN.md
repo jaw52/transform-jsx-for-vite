@@ -21,16 +21,18 @@ Wait for batch modification of suffix name of '. js'
 
 ## Instructions
 
+### Scan path
+
 If the directory name to be scanned is not src, you can use the relative path to specify it
 
 ```bash
-# 相对路径
+# relative path
 Please specify the folder to be scanned ./example/src
 Please specify the folder to be scanned example/src
 Please specify the folder to be scanned ../example/src
 ```
 
-##Ignore path
+### Ignore path
 
 Manually ignore the scanning of some paths. Refer to [fast-glob](https://github.com/mrmlnc/fast-glob#readme) for rules
 
@@ -41,4 +43,12 @@ npx @jaw52/transform-jsx-for-vite --ignore **/example/**
 npx @jaw52/transform-jsx-for-vite --ignore **/.git/** --ignore **/example/**
 # Or use commas(Recommended)
 npx @jaw52/transform-jsx-for-vite --ignore **/.git/**,**/example/**
+```
+
+### Modify concurrency
+
+Concurrent number of modification commands executed at the same time (default 5)
+
+```bash
+npx @jaw52/transform-jsx-for-vite --concurrency 10
 ```
