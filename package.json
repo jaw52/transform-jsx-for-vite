@@ -1,7 +1,7 @@
 {
   "name": "@jaw52/transform-jsx-for-vite",
   "type": "module",
-  "version": "1.5.0",
+  "version": "1.5.1-beta.0",
   "packageManager": "pnpm@7.12.0",
   "description": "transform js to jsx for vite",
   "author": "jaw52",
