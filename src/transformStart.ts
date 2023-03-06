@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { rename } from 'node:fs/promises'
+import { extname } from 'path'
 import * as parser from '@babel/parser'
 import _traverse from '@babel/traverse'
 import consola from 'consola'
@@ -14,7 +15,7 @@ import { formatMs } from './utils/formatTime'
 const traverse = (_traverse as any).default as typeof _traverse
 
 const runRename = async (oldPath: string, isGitMv: 1 | 0) => {
-  const target = oldPath.includes('.js')
+  const target = extname(oldPath) === '.js'
     ? oldPath.replace(/.js$/, '.jsx')
     : oldPath.replace(/.ts$/, '.tsx')
 
