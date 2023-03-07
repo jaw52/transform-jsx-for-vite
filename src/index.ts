@@ -5,6 +5,13 @@ import { green } from 'kolorist'
 import locales from './utils/locales'
 import { transformStart } from './transformStart'
 
+/* 用户参数 */
+export interface Setting {
+  scanPath: string
+  isGitMv: 1 | 0
+  lang: 'zh' | 'en'
+}
+
 const runTransform = async () => {
   const { scanPath, isGitMv, lang = 'zh' } = await prompts([
     {
@@ -36,17 +43,18 @@ const runTransform = async () => {
     },
   ], {
     onCancel: () => process.exit(1),
-  }) as { scanPath: string; isGitMv: 1 | 0; lang: 'zh' | 'en' }
+  }) as Setting
 
-  const needTransformList = await transformStart(scanPath.trim(), isGitMv)
+  const needTransformList = await transformStart({ scanPath: scanPath.trim(), isGitMv, lang })
+  const t = locales[lang]
 
   if (needTransformList.length > 0) {
-    consola.success(`${locales[lang].finish} ${green('to jsx')}`)
+    consola.success(`${t.finish} ${green('to jsx')}`)
 
     const { show = false } = await prompts({
       name: 'show',
       type: 'confirm',
-      message: `${locales[lang].show}?`,
+      message: `${t.show}?`,
       initial: false,
     }) as { show?: boolean }
 
@@ -54,7 +62,7 @@ const runTransform = async () => {
       needTransformList.forEach(item => consola.log(item))
   }
   else {
-    consola.info(locales[lang].noFiles)
+    consola.info(t.noFiles)
   }
 }
 

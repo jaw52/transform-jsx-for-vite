@@ -11,6 +11,8 @@ import pLimit from 'p-limit'
 import { loadArgs } from './utils/loadArgs'
 import { gitMv } from './utils/gitMv'
 import { formatMs } from './utils/formatTime'
+import locales from './utils/locales'
+import type { Setting } from '.'
 
 const traverse = (_traverse as any).default as typeof _traverse
 
@@ -38,11 +40,10 @@ const runRename = async (oldPath: string, isGitMv: 1 | 0) => {
 }
 
 /**
- * @param scanPath 扫描目录
- * @param isGitMv 是否是Git mv方式迁移
  * @returns 迁移的文件List
  */
-export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<string[]> => {
+export const transformStart = async ({ scanPath, isGitMv, lang }: Setting): Promise<string[]> => {
+  const t = locales[lang]
   const { ignore, concurrency } = loadArgs()
 
   const tsFiles = glob.sync(`${slash(scanPath)}/**/*.{ts,js}`, {
@@ -74,7 +75,7 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
       })
     }
     catch (err) {
-      consola.error('Babel failed to parse the file', err)
+      consola.error(t.babelFail, err)
     }
   }
 
@@ -82,7 +83,7 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
   const startTime = Date.now()
 
   try {
-    spinner.start('Start scanning\n')
+    spinner.start(`${t.start}\n`)
     const limit = pLimit(concurrency)
 
     await Promise.all(
@@ -90,7 +91,7 @@ export const transformStart = async (scanPath: string, isGitMv: 1 | 0): Promise<
     )
 
     const runTime = formatMs(Date.now() - startTime)
-    spinner.succeed(`Finish scanning - ${runTime}`)
+    spinner.succeed(`${t.finish} - ${runTime}`)
   }
   catch {
     spinner.fail('Fail')
