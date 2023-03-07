@@ -6,7 +6,7 @@ import locales from './utils/locales'
 import { transformStart } from './transformStart'
 
 const runTransform = async () => {
-  const { scanPath, isGitMv } = await prompts([
+  const { scanPath, isGitMv, lang = 'zh' } = await prompts([
     {
       type: 'select',
       name: 'lang',
@@ -41,10 +41,20 @@ const runTransform = async () => {
   const needTransformList = await transformStart(scanPath.trim(), isGitMv)
 
   if (needTransformList.length > 0) {
-    consola.success(`Finish ${green('to jsx')}`)
+    consola.success(`${locales[lang].finish} ${green('to jsx')}`)
+
+    const { show = false } = await prompts({
+      name: 'show',
+      type: 'confirm',
+      message: `${locales[lang].show}?`,
+      initial: false,
+    }) as { show?: boolean }
+
+    if (show)
+      needTransformList.forEach(item => consola.log(item))
   }
   else {
-    consola.info('No files found to be migrated')
+    consola.info(locales[lang].noFiles)
   }
 }
 
