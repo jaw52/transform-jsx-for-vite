@@ -75,7 +75,7 @@ export const transformStart = async ({ scanPath, isGitMv, lang }: Setting): Prom
       })
     }
     catch (err) {
-      consola.error(t.babelFail, err)
+      consola.error(`${t.babelFail} ${path} : ${err}`)
     }
   }
 
