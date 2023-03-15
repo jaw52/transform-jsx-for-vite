@@ -9,8 +9,8 @@ export default {
     babelFail: 'Babel解析文件失败',
     isGitMv: '是否使用Git mv方式进行批量修改后缀名（Git托管的项目推荐这种方式）',
     mode: '识别模式',
-    fast: '更快速',
-    precise: '更准确（use Babel）',
+    fast: '更快速（测试阶段）',
+    precise: '更准确（推荐）',
   },
   en: {
     scanPath: 'Please specify the folder to be scanned',
@@ -22,7 +22,7 @@ export default {
     babelFail: 'Babel failed to parse the file',
     isGitMv: 'Whether to use Git mv method to batch modify suffix names (Git managed projects recommend this method)',
     mode: 'recognition pattern',
-    fast: 'fast',
-    precise: 'precise（use Babel）',
+    fast: 'fast(beta...)',
+    precise: 'precise(Recommend)',
   },
 }

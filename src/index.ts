@@ -14,7 +14,7 @@ export interface Setting {
 }
 
 const runTransform = async () => {
-  const { scanPath, isGitMv, lang = 'zh', mode = 'fast' } = await prompts([
+  const { scanPath, isGitMv, lang = 'zh', mode = 'precise' } = await prompts([
     {
       type: 'select',
       name: 'lang',
@@ -38,8 +38,8 @@ const runTransform = async () => {
       message: (_, values) => locales[values.lang].mode,
       initial: 0,
       choices: (_, values) => [
-        { title: locales[values.lang].fast, value: 'fast' },
         { title: locales[values.lang].precise, value: 'precise' },
+        { title: locales[values.lang].fast, value: 'fast' },
       ],
     },
     {
