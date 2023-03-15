@@ -42,7 +42,7 @@ const runRename = async (oldPath: string, isGitMv: 1 | 0) => {
 /**
  * @returns 迁移的文件List
  */
-export const transformStart = async ({ scanPath, isGitMv, lang }: Setting): Promise<string[]> => {
+export const transformStart = async ({ scanPath, isGitMv, lang, mode }: Setting): Promise<string[]> => {
   const t = locales[lang]
   const { ignore, concurrency } = loadArgs()
 
@@ -57,25 +57,34 @@ export const transformStart = async ({ scanPath, isGitMv, lang }: Setting): Prom
   for (const path of tsFiles) {
     const source = fs.readFileSync(path, 'utf-8')
 
-    try {
-      const ast = parser.parse(source, {
-        sourceType: 'module',
-        plugins: ['jsx', 'typescript', 'dynamicImport', 'classProperties', 'decorators'],
-      })
+    if (mode === 'fast') {
+      const reactRE = /[\'"]\s*react\s*[\'"]/
+      const htmlRE = /<(\w+)[^>]*>(.*?<\/\1>)?/
 
-      traverse(ast, {
-        enter(pathNode) {
-          if (needTransformList.includes(path)) {
-            pathNode.stop()
-          }
-
-          if (pathNode.isJSX() && !needTransformList.includes(path))
-            needTransformList.push(path)
-        },
-      })
+      if (reactRE.test(source) && htmlRE.test(source))
+        needTransformList.push(path)
     }
-    catch (err) {
-      consola.error(`${t.babelFail} ${path} : ${err}`)
+    else {
+      try {
+        const ast = parser.parse(source, {
+          sourceType: 'module',
+          plugins: ['jsx', 'typescript', 'dynamicImport', 'classProperties', 'decorators'],
+        })
+
+        traverse(ast, {
+          enter(pathNode) {
+            if (needTransformList.includes(path)) {
+              pathNode.stop()
+            }
+
+            if (pathNode.isJSX() && !needTransformList.includes(path))
+              needTransformList.push(path)
+          },
+        })
+      }
+      catch (err) {
+        consola.error(`${t.babelFail} ${path} : ${err}`)
+      }
     }
   }
 

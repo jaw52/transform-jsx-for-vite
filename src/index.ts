@@ -10,10 +10,11 @@ export interface Setting {
   scanPath: string
   isGitMv: 1 | 0
   lang: 'zh' | 'en'
+  mode: 'fast' | 'precise'
 }
 
 const runTransform = async () => {
-  const { scanPath, isGitMv, lang = 'zh' } = await prompts([
+  const { scanPath, isGitMv, lang = 'zh', mode = 'fast' } = await prompts([
     {
       type: 'select',
       name: 'lang',
@@ -33,6 +34,16 @@ const runTransform = async () => {
     },
     {
       type: 'select',
+      name: 'mode',
+      message: (_, values) => locales[values.lang].mode,
+      initial: 0,
+      choices: (_, values) => [
+        { title: locales[values.lang].fast, value: 'fast' },
+        { title: locales[values.lang].precise, value: 'precise' },
+      ],
+    },
+    {
+      type: 'select',
       name: 'isGitMv',
       message: (_, values) => locales[values.lang].isGitMv,
       initial: 0,
@@ -45,7 +56,7 @@ const runTransform = async () => {
     onCancel: () => process.exit(1),
   }) as Setting
 
-  const needTransformList = await transformStart({ scanPath: scanPath.trim(), isGitMv, lang })
+  const needTransformList = await transformStart({ scanPath: scanPath.trim(), isGitMv, lang, mode })
   const t = locales[lang]
 
   if (needTransformList.length > 0) {
