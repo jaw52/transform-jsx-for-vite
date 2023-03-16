@@ -2,12 +2,10 @@
 
 [![npm](https://img.shields.io/npm/v/@jaw52/transform-jsx-for-vite)](https://npmjs.com/package/@jaw52/transform-jsx-for-vite)
 
-> This tool is used to assist the traditional React project to VITE support
-
-This tool helps migrate traditional React projects to Vite,Used in batches to modify `.js` file suffix names (**only modify** files containing` jsx` grammar)
+Batch modify `.js` files containing jsx syntax in traditional React projects to `.jsx`
 
 - ⚡️`.ts`=>`.tsx`,`.js`=>`.jsx`
-- 💡Using `babel` recognition, high accuracy
+- 💡Using `babel` recognition, high accuracy（in precise mode）
 
 ## Quick Start
 
@@ -17,9 +15,9 @@ Execute the following command under the root directory of the project to be conv
 npx @jaw52/transform-jsx-for-vite
 ```
 
-Wait for batch modification of suffix name of '. js'
+Follow the prompts and wait for batch modification of `.js` suffix
 
-## Instructions
+## Instructions for use
 
 ### Scan path
 
@@ -31,6 +29,13 @@ Please specify the folder to be scanned ./example/src
 Please specify the folder to be scanned example/src
 Please specify the folder to be scanned ../example/src
 ```
+### Identification mode selection
+
+Used to identify whether the file contains `jsx`
+
+- Precise mode: Use `Babel` to identify, which is more accurate and time-consuming. There may be a Babel recognition error, resulting in some files not converting the suffix (if this is the case, please provide [issue](https://github.com/jaw52/transform-jsx-for-vite/issues)）。
+
+- Fast mode: fast, but less understanding of jsx syntax than `Babel` (but can also cover a large part)
 
 ### Ignore path
 
@@ -52,3 +57,11 @@ Concurrent number of modification commands executed at the same time (default 5)
 ```bash
 npx @jaw52/transform-jsx-for-vite --concurrency 10
 ```
+
+## Why this library was created
+
+`Vite` does not support `.js` files with `jsx` syntax in React projects
+
+https://github.com/vitejs/vite/discussions/3448
+
+https://github.com/vitejs/vite/discussions/3112

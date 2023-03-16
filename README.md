@@ -4,12 +4,10 @@
 
 Translations: <a href="https://github.com/jaw52/transform-jsx-for-vite/blob/main/README-EN.md">English</a>
 
-> 该工具用于辅助将传统react项目迁移至vite支持
-
-该工具辅助迁移传统React项目到Vite中，用于批量修改`.js`文件后缀名（**只修改**含`jsx`语法的文件）。
+将传统React项目中含jsx语法的`.js`文件批量修改为`.jsx`
 
 - ⚡️`.ts`=>`.tsx`,`.js`=>`.jsx`
-- 💡使用`babel`识别，准确率高
+- 💡使用`babel`识别，准确率高（准确模式下）
 
 ## 快速开始
 
@@ -19,9 +17,9 @@ Translations: <a href="https://github.com/jaw52/transform-jsx-for-vite/blob/main
 npx @jaw52/transform-jsx-for-vite
 ```
 
-等待批量修改`.js`的后缀名
+按提示操作，并等待批量修改`.js`的后缀名
 
-## 使用
+## 使用说明
 
 ### 扫描路径
 
@@ -33,6 +31,14 @@ npx @jaw52/transform-jsx-for-vite
 请指定需要扫描的文件夹 example/src
 请指定需要扫描的文件夹 ../example/src
 ```
+
+### 识别模式选择
+
+用于识别文件中是否含`jsx`
+
+- 准确模式：使用`Babel`识别，更加准确，耗时一些。可能出现Babel识别错误，导致部分文件未转换后缀名（有这种情况，请提[issue](https://github.com/jaw52/transform-jsx-for-vite/issues)）。
+  
+- 快速模式：速度快，但对jsx语法的识别程度不如`Babel`（但也能覆盖很大部分）。
 
 ### 忽略路径
 
@@ -54,3 +60,11 @@ npx @jaw52/transform-jsx-for-vite --ignore **/.git/**,**/example/**
 ```bash
 npx @jaw52/transform-jsx-for-vite --concurrency 10
 ```
+
+## 为什么创建这个库
+
+`Vite`不支持React项目中含`jsx`语法的`.js`文件
+
+https://github.com/vitejs/vite/discussions/3448
+
+https://github.com/vitejs/vite/discussions/3112
