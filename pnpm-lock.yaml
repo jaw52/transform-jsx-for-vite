@@ -18,6 +18,7 @@ importers:
       esno: ^0.16.3
       execa: ^7.0.0
       fast-glob: ^3.2.12
+      is-html: ^3.0.0
       kolorist: ^1.7.0
       ora: ^6.1.2
       p-limit: ^4.0.0
@@ -32,6 +33,7 @@ importers:
       consola: 2.15.3
       execa: 7.0.0
       fast-glob: 3.2.12
+      is-html: 3.0.0
       kolorist: 1.7.0
       ora: 6.1.2
       p-limit: 4.0.0
@@ -2270,6 +2272,11 @@ packages:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: true
 
+  /html-tags/3.2.0:
+    resolution: {integrity: sha512-vy7ClnArOZwCnqZgvv+ddgHgJiAFXe3Ge9ML5/mBctVJoUoYPCdxVucOywjDARn6CVoh3dRSFdPHy2sX80L0Wg==}
+    engines: {node: '>=8'}
+    dev: false
+
   /htmlparser2/8.0.1:
     resolution: {integrity: sha512-4lVbmc1diZC7GUJQtRQ5yBAeUCL1exyMwmForWkRLnwyzWBFxN633SALPMGYaWZvKe9j1pRZJpauvmxENSp/EA==}
     dependencies:
@@ -2408,6 +2415,13 @@ packages:
   /is-hexadecimal/1.0.4:
     resolution: {integrity: sha512-gyPJuv83bHMpocVYoqof5VDiZveEoGoFL8m3BXNb2VW8Xs+rz9kqO8LOQ5DH6EsuvilT1ApazU0pyl+ytbPtlw==}
     dev: true
+
+  /is-html/3.0.0:
+    resolution: {integrity: sha512-LmdKtXjzmYi07R1wJA6ZJk/8Y+6J40x8zwsJT3VnhqgxJdRWwYWizpGjvdtA9PkeA57pjZYMbwm6IpPMSn4JNA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      html-tags: 3.2.0
+    dev: false
 
   /is-interactive/2.0.0:
     resolution: {integrity: sha512-qP1vozQRI+BMOPcjFzrjXuQvdak2pHNUMZoeG2eRbiSqyvbEf/wQtEOTOX1guk6E3t36RkaqiSt8A/6YElNxLQ==}

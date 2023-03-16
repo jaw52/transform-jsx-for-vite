@@ -8,6 +8,7 @@ import slash from 'slash'
 import glob from 'fast-glob'
 import ora from 'ora'
 import pLimit from 'p-limit'
+import isHtml from 'is-html'
 import { loadArgs } from './utils/loadArgs'
 import { gitMv } from './utils/gitMv'
 import { formatMs } from './utils/formatTime'
@@ -58,10 +59,7 @@ export const transformStart = async ({ scanPath, isGitMv, lang, mode }: Setting)
     const source = fs.readFileSync(path, 'utf-8')
 
     if (mode === 'fast') {
-      const reactRE = /[\'"]\s*react\s*[\'"]/
-      const htmlRE = /<(\w+)[^>]*>(.*?<\/\1>)?/
-
-      if (reactRE.test(source) && htmlRE.test(source))
+      if (isHtml(source))
         needTransformList.push(path)
     }
     else {
