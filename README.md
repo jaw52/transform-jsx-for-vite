@@ -2,68 +2,67 @@
 
 [![npm](https://img.shields.io/npm/v/@jaw52/transform-jsx-for-vite)](https://npmjs.com/package/@jaw52/transform-jsx-for-vite)
 
-Translations: <a href="https://github.com/jaw52/transform-jsx-for-vite/blob/main/README-EN.md">English</a>
+Translations: <a href="https://github.com/jaw52/transform-jsx-for-vite/blob/main/README-EN.md">简体中文</a>
 
-将传统React项目中含jsx语法的`.js`文件批量修改为`.jsx`
+Batch modify `.js` files containing jsx syntax in traditional React projects to `.jsx`
 
 - ⚡️`.ts`=>`.tsx`,`.js`=>`.jsx`
-- 💡使用`babel`识别，准确率高（准确模式下）
+- 💡Using `babel` recognition, high accuracy（in precise mode）
 
-## 快速开始
+## Quick Start
 
-需要进行转换的项目根目录下执行以下命令
+Execute the following command under the root directory of the project to be converted
 
 ```cmd
 npx @jaw52/transform-jsx-for-vite
 ```
 
-按提示操作，并等待批量修改`.js`的后缀名
+Follow the prompts and wait for batch modification of `.js` suffix
 
-## 使用说明
+## Instructions for use
 
-### 扫描路径
+### Scan path
 
-如果需要扫描的目录名称不是src，可以使用相对路径进行指定
+If the directory name to be scanned is not src, you can use the relative path to specify it
 
 ```bash
-# 相对路径
-请指定需要扫描的文件夹 ./example/src
-请指定需要扫描的文件夹 example/src
-请指定需要扫描的文件夹 ../example/src
+# relative path
+Please specify the folder to be scanned ./example/src
+Please specify the folder to be scanned example/src
+Please specify the folder to be scanned ../example/src
 ```
+### Identification mode selection
 
-### 识别模式选择
+Used to identify whether the file contains `jsx`
 
-用于识别文件中是否含`jsx`
+- Precise mode: Use `Babel` to identify, which is more accurate and time-consuming. There may be a Babel recognition error, resulting in some files not converting the suffix (if this is the case, please provide [issue](https://github.com/jaw52/transform-jsx-for-vite/issues)）。
 
-- 准确模式：使用`Babel`识别，更加准确，耗时一些。可能出现Babel识别错误，导致部分文件未转换后缀名（有这种情况，请提[issue](https://github.com/jaw52/transform-jsx-for-vite/issues)）。
-  
-- 快速模式：速度快，但对jsx语法的识别程度不如`Babel`（但也能覆盖很大部分）。
+- Fast mode: fast, but less understanding of jsx syntax than `Babel` (but can also cover a large part)
 
-### 忽略路径
+### Ignore path
 
-手动忽略某些路径的扫描，规则参照[fast-glob](https://github.com/mrmlnc/fast-glob#readme)
+Manually ignore the scanning of some paths. Refer to [fast-glob](https://github.com/mrmlnc/fast-glob#readme) for rules
 
 ```bash
-# 单个路径
+# single path
 npx @jaw52/transform-jsx-for-vite --ignore **/example/**
-# 多个路径
+# Multiple paths
 npx @jaw52/transform-jsx-for-vite --ignore **/.git/** --ignore **/example/**
-# 或者使用逗号隔开(推荐)
+# Or use commas(Recommended)
 npx @jaw52/transform-jsx-for-vite --ignore **/.git/**,**/example/**
 ```
 
-### 修改并发数
+### Modify concurrency
 
-同一时间执行修改命令的并发数量（默认为5）
+Concurrent number of modification commands executed at the same time (default 5)
 
 ```bash
 npx @jaw52/transform-jsx-for-vite --concurrency 10
 ```
 
-## 为什么创建这个库
+## Why this library was created
 
-`Vite`不支持React项目中含`jsx`语法的`.js`文件
+`Vite` does not support `.js` files with `jsx` syntax in React projects
 
 https://github.com/vitejs/vite/discussions/3448
 
